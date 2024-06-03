@@ -2,12 +2,15 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
+import  "dotenv/config"
 
 
 
 const app = express()
 const port = 3000
-const Tokenkey = 'qswghdtyfr1@34'
+// const Tokenkey = 'qswghdtyfr1@34'
+
+
 
 app.use(express.json())
 app.use(cors())
@@ -25,7 +28,7 @@ const UserModel = mongoose.model('user', userSchema);
 app.get('/user', async (req, res) => {
     try {
         const token = req.headers.authorization
-        const decoded = jwt.verify(token, Tokenkey);
+        const decoded = jwt.verify(token, process.env.Tokenkey);
         console.log(decoded);
         if (decoded.role === "Admin") {
             const user = await UserModel.find({})
@@ -58,8 +61,8 @@ app.post('/user/register', async (req, res) => {
 
 
 
-
 app.post('/user/login', async (req, res) => {
+
     const { email, password } = req.body
     const user = await UserModel.findOne({ email: email })
     if (!user) {
@@ -68,7 +71,7 @@ app.post('/user/login', async (req, res) => {
     if (user.password !== password) {
         return res.status(404).send({ message: "password wrong" })
     }
-    var token = jwt.sign({ id: user._id, email: user.email,role:user.role }, Tokenkey);
+    var token = jwt.sign({ id: user._id, email: user.email,role:user.role }, );
     res.status(200).json({ accessToken: token })
 })
 
