@@ -2,13 +2,13 @@ import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import jwt from 'jsonwebtoken'
-import  "dotenv/config"
+import   "dotenv/config"
 
 
 
 const app = express()
 const port = 3000
-// const Tokenkey = 'qswghdtyfr1@34'
+const Tokenkey = 'qswghdtyfr1@34'
 
 
 
@@ -71,7 +71,7 @@ app.post('/user/login', async (req, res) => {
     if (user.password !== password) {
         return res.status(404).send({ message: "password wrong" })
     }
-    var token = jwt.sign({ id: user._id, email: user.email,role:user.role }, );
+    var token = jwt.sign({ id: user._id, email: user.email,role:user.role },Tokenkey );
     res.status(200).json({ accessToken: token })
 })
 
