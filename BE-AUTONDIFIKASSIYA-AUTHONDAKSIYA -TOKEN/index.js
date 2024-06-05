@@ -32,7 +32,7 @@ app.get('/user', async (req, res) => {
         console.log(decoded);
         if (decoded.role === "Admin") {
             const user = await UserModel.find({})
-          return  res.send(user)
+           return  res.send(user)
         }
         res.status(401).json({ message: "You dont have permission" })
 

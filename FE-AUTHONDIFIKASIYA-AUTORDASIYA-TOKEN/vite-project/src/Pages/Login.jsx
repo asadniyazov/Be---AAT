@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
 import  Cookies from 'js-cookie'
+import {useNavigate} from "react-router-dom"
+
+
 
 function Login() {
   const [email, setemail] = useState('')
   const [password, setpassword] = useState('')
-
+  const navigate=useNavigate()
 
 
 
@@ -18,19 +21,14 @@ function Login() {
       method: "POST",
       body: JSON.stringify({ email, password })
     })
-
-
       .then((response) => response.json())
-
-
-
       .then((data) => {
         console.log(data)
         Cookies.set('token', data.accessToken)
 
+        
       })
-
-     
+      navigate("/")
   }
 
 
